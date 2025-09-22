@@ -18,3 +18,4 @@ module.exports = async function (context, req) {
 
   context.res.json(appointments);
 };
+//checking git integration
