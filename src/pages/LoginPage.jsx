@@ -21,7 +21,6 @@ const LoginPage = () => {
       const redirectPath = user.role === 'student' ? '/student' :
                             user.role === 'counselor' ? '/counselor' :
                             user.role === 'admin' ? '/admin' : '/';
-      
       navigate(redirectPath);
     } catch (error) {
       setError(error.message);
