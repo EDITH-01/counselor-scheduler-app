@@ -4,9 +4,12 @@ import { useRouter } from '../hooks/useRouter';
 import { Calendar } from 'lucide-react';
 
 const LoginPage = () => {
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  //State Variables
+  const [credentials, setCredentials] = useState({ username: '', password: '' });//store username and password
+  const [loading, setLoading] = useState(false);//Shows ,if process is loading or not
+  const [error, setError] = useState('');//store error message
+
+
   const { login } = useAuth();
   const { navigate } = useRouter();
 
