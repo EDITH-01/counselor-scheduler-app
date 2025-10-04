@@ -1,20 +1,56 @@
-// Mock API service
+// Internal storage for the mock token, simulating an Authorization header
+let currentAuthToken = null;
+
+// Utility function required by AuthContext to set/clear the token
+export const setAuthToken = (token) => {
+  currentAuthToken = token;
+  // This console log helps you track when the token is being set/cleared
+  console.log(`[API MOCK] Auth token set to: ${token ? 'PRESENT' : 'NULL'}`);
+};
+
+// Mock API service object
 export const api = {
+
+  // ------------------------------------------------
+  // AUTHENTICATION
+  // ------------------------------------------------
   login: async (credentials) => {
+    // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 1000));
     
+    // 1. Logic to handle the 'aad' provider string from the LoginPage
+    if (credentials === 'aad') {
+        // Mock a successful AAD login for the test user (Admin)
+        const user = { role: 'admin', name: 'AAD Admin User', id: '220701230' };
+        const token = 'mock-aad-token-' + user.id;
+        console.log(`[API MOCK] Mock AAD login successful for ${user.name}`);
+        return { data: { user: user, token: token } };
+    }
+    
+    // 2. Logic for traditional username/password login
     const users = {
+      // Mock Users: password is 'password' for all
       'student1': { role: 'student', name: 'John Doe', id: 1 },
       'counselor1': { role: 'counselor', name: 'Dr. Smith', id: 2 },
       'admin1': { role: 'admin', name: 'Admin User', id: 3 }
     };
     
-    if (users[credentials.username] && credentials.password === 'password') {
-      return { data: { user: users[credentials.username], token: 'mock-token' } };
+    // Ensure credentials is an object with username property for the lookup
+    if (credentials && credentials.username) {
+        if (users[credentials.username] && credentials.password === 'password') {
+            const mockToken = `mock-token-${credentials.username}`;
+            console.log(`[API MOCK] Login successful for ${credentials.username}`);
+            return { data: { user: users[credentials.username], token: mockToken } };
+        }
     }
+    
+    console.error(`[API MOCK] Login failed.`);
     throw new Error('Invalid credentials');
   },
   
+  // ------------------------------------------------
+  // DATA FETCHES & MUTATIONS (Original Mock Functions)
+  // ------------------------------------------------
   getAppointments: async (userId, role) => {
     await new Promise(resolve => setTimeout(resolve, 500));
     
@@ -54,7 +90,6 @@ export const api = {
   
   bookAppointment: async (appointmentData) => {
     await new Promise(resolve => setTimeout(resolve, 800));
-    // In a real app, you'd find the counselor name from the ID
     const counselorName = appointmentData.counselorId === '2' ? 'Dr. Smith' : 'Dr. Johnson';
     return { data: { id: Date.now(), ...appointmentData, counselorName, status: 'pending' } };
   },
