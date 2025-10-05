@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { useAuth } from '@hooks/useAuth'
-import { useRouter } from '@hooks/useRouter'
-import LoginPage from '@pages/LoginPage'
-import StudentDashboard from '@pages/StudentDashboard'
-import CounselorDashboard from '@pages/CounselorDashboard'
-import AdminDashboard from '@pages/AdminDashboard'
-import LoadingSpinner from '@components/common/LoadingSpinner'
+import { useAuth } from './hooks/useAuth'
+import { useRouter } from './hooks/useRouter'
+import LoginPage from './pages/LoginPage'
+import StudentDashboard from './pages/StudentDashboard'
+import CounselorDashboard from './pages/CounselorDashboard'
+import AdminDashboard from './pages/AdminDashboard'
+import LoadingSpinner from './components/common/LoadingSpinner'
 
 const AppRouter = () => {
   const { user, loading } = useAuth()
