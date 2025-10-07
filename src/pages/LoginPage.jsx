@@ -6,10 +6,17 @@ const LoginPage = () => {
   // const { login } = useAuth() <-- No longer needed
 
   // New function: redirects the browser to the SWA built-in login endpoint
-  const handleAadLogin = () => {
-    // The browser is redirected to the SWA endpoint, which handles the secure AAD redirect.
+ const handleAadLogin = () => {
+  if (window.location.hostname === 'localhost') {
+    // ⚠️ For local testing only: Mock a successful login here.
+    // In a real app, you would set some local state or cookie.
+    alert("Mock Login Success! Redirecting to dashboard...");
+    window.location.href = '/'; 
+  } else {
+    // For production/deployed environment
     window.location.href = '/.auth/login/aad';
   }
+} 
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
