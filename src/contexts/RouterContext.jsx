@@ -1,5 +1,6 @@
 import React, { useState, createContext } from 'react';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const RouterContext = createContext();
 
 export const RouterProvider = ({ children }) => {
